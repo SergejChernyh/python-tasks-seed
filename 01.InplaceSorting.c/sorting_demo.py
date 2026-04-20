@@ -1,20 +1,23 @@
 #!/usr/bin/env -S python3
 """
-Sortings demo
+Sorts array of integers from sys.argv and prints them into stdout
 """
 
-from beartype import beartype
-import random
-from counting_container import CountingList, CountingOrdered
+import sys
 import sortings
 
 if __name__ == "__main__":
-    raw_data = list(range(1000))
-    random.shuffle(raw_data)
-    data: CountingList[CountingOrdered[int]] = CountingList(
-        [CountingOrdered(e) for e in raw_data]
-    )
-    sortings.builtin_sort(data)
-    print(
-        f"Comps: {CountingOrdered.comparisons()}, Swaps: {CountingList.likely_swaps()}"
-    )
+    if len(sys.argv) < 2:
+        print("Provide at least one number!", file=sys.stderr)
+        sys.exit(1)
+
+    input_data = list(map(int, sys.argv[1:]))
+
+    for name, sort_alg in sortings.sorting_algs:
+        data = input_data[:]
+        try:
+            sort_alg(data)
+        except IndexError:
+            print(f"{name} ERROR")
+            continue
+        print(f"{name} {' '.join(map(str, data))}")

@@ -4,8 +4,8 @@ Counting container and value
 
 from __future__ import annotations
 from typing import Generic, TypeVar, Optional
-from beartype import beartype
 from functools import total_ordering
+from beartype import beartype
 
 T = TypeVar("T")
 
@@ -14,7 +14,6 @@ T = TypeVar("T")
 class CountingList(Generic[T]):
     """
     A wrapper around a Python list that acts like an array and counts assignments
-
     """
 
     _assignments: int = 0
@@ -164,6 +163,22 @@ class CountingOrdered(Generic[T]):
             return NotImplemented
         type(self)._comparisons += 1
         return self._value < other._value
+
+    def __gt__(self, other: object) -> bool:
+        """
+        Greater-than comparison that increments the comparisons counter
+
+        :param other: The object to compare with
+        :type other: object
+        :return: True if self > other, False otherwise
+        :rtype: bool
+        :raises TypeError: If `other` is not a CountingOrdered instance (returns NotImplemented
+            to allow reflected operations).
+        """
+        if not isinstance(other, CountingOrdered):
+            return NotImplemented
+        type(self)._comparisons += 1
+        return self._value > other._value
 
     def __repr__(self) -> str:
         """
