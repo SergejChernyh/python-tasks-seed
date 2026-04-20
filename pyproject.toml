@@ -12,4 +12,5 @@ dependencies = [
     "black>=24.0.0",
     "ruff>=0.3.0",
     "beartype>=0.18.0",
+    "matplotlib>=3.8.0",
 ]
