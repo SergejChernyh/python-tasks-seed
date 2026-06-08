@@ -26,27 +26,36 @@ def test_shorts_decode():
     assert base85ed.decode(b"F)}kW") == b"1234"
 
 
-def test_longs_encode():
+def test_len5_encode():
     """
     Test random long encodes
     """
-    assert base85ed.encode(b"2c5uJ4m90Tvrm578H668LGyfTF") == b"GGjG$N;GXbFjRJOZ8bMINH#V&Oh"
-    assert base85ed.encode(b"sr1vFDG432HnDHBuerCD42MJHR") == b"b8<0uMnp$6GcrhSL`Xt)WpYDAG%`&}NKy"
+    assert base85ed.encode(b"\x03/\x98\x8f\x12") == b"1234567"
+    assert base85ed.encode(b"sr1vF") == b"b8<0uMg"
 
 
-def test_longs_decode():
+def test_len6_decode():
     """
     Test random long decodes
     """
-    assert base85ed.decode(b"GGjG$N;GXbFjRJOZ8bMINH#V&Oh") == b"2c5uJ4m90Tvrm578H668LGyfTF"
-    assert base85ed.decode(b"b8<0uMnp$6GcrhSL`Xt)WpYDAG%`&}NKy") == b"sr1vFDG432HnDHBuerCD42MJHR"
+    assert base85ed.decode(b"GGjG${") == b"2c5u"
+    assert base85ed.decode(b"GGjG$") == b"2c5u"
+    assert base85ed.decode(b"b8<0u0") == b"sr1v"
+    assert base85ed.decode(b"b8<0u") == b"sr1v"
 
 
 def test_overflow():
     """
     Test if the function raises an exceptions
     """
+    assert base85ed.decode(b"|0") == b"\xff"
+    assert base85ed.encode(b"\xff\xff\xff\xff") == b"|NsC0"
+
+    assert base85ed.decode(b"|NsC0") == b"\xff\xff\xff\xff"
     with pytest.raises(ValueError):
-        base85ed.decode(b"~")
+        base85ed.decode(b"|NsC1")
+
+    assert base85ed.decode(b"|0") == b"\xff"
     with pytest.raises(ValueError):
-        base85ed.decode(b"1234567890~")
+        base85ed.decode(b"|")
+    
