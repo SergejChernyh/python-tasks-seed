@@ -25,6 +25,7 @@ def test_shorts_decode():
     assert base85ed.decode(b"F)}j") == b"123"
     assert base85ed.decode(b"F)}kW") == b"1234"
 
+
 def test_len1_decode():
     """
     Test random long decodes
@@ -55,4 +56,3 @@ def test_overflow():
     assert base85ed.decode(b"|0") == b"\xff"
     with pytest.raises(ValueError):
         base85ed.decode(b"|")
-    
