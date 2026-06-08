@@ -47,7 +47,7 @@ def decode(b: bytes):
         if val >= 4294967296:
             raise ValueError(
                 f"base85 overflow in hunk starting at byte {len(b) - len(b) % 5}"
-                )
+            )
         res.extend(val.to_bytes(4)[: len(b) % 5 - 1])
 
     return bytes(res)
