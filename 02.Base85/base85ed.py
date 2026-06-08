@@ -46,7 +46,7 @@ def decode(b: bytes):
         last_chunk = b[len(b) - len(b) % 5 :] + b"~" * (5 - len(b) % 5)
         val = sum(DECODE_MAP[last_chunk[j]] * powers85[j] for j in range(5))
         if val >= 4294967296:
-            raise ValueError(f"base85 overflow in hunk starting at byte {len(b) - len(b) % 4}")
+            raise ValueError(f"base85 overflow in hunk starting at byte {len(b) - len(b) % 5}")
         res.extend(val.to_bytes(4)[: len(b) % 5 - 1])
 
     return bytes(res)

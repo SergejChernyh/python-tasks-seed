@@ -30,16 +30,16 @@ def test_longs_encode():
     """
     Test random long encodes
     """
-    assert base85ed.decode(b"2c5uJ4m90Tvrm578H668LGyfTF") == b"11N1a8i1BF0N<49D)F7382`@c9LjA?<(6"
-    assert base85ed.decode(b"sr1vFDG432HnDHBuerCD42MJHR") == b"F)j!Y7RTa'1GVL=6qBXeATC.+1bqct85]"
+    assert base85ed.encode(b"2c5uJ4m90Tvrm578H668LGyfTF") == b"GGjG$N;GXbFjRJOZ8bMINH#V&Oh"
+    assert base85ed.encode(b"sr1vFDG432HnDHBuerCD42MJHR") == b"b8<0uMnp$6GcrhSL`Xt)WpYDAG%`&}NKy"
 
 
 def test_longs_decode():
     """
     Test random long decodes
     """
-    assert base85ed.decode(b"11N1a8i1BF0N<49D)F7382`@c9LjA?<(6") == b"2c5uJ4m90Tvrm578H668LGyfTF"
-    assert base85ed.decode(b"F)j!Y7RTa'1GVL=6qBXeATC.+1bqct85]") == b"sr1vFDG432HnDHBuerCD42MJHR"
+    assert base85ed.decode(b"GGjG$N;GXbFjRJOZ8bMINH#V&Oh") == b"2c5uJ4m90Tvrm578H668LGyfTF"
+    assert base85ed.decode(b"b8<0uMnp$6GcrhSL`Xt)WpYDAG%`&}NKy") == b"sr1vFDG432HnDHBuerCD42MJHR"
 
 
 def test_overflow():
