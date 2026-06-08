@@ -35,8 +35,6 @@ def decode(b: bytes):
     Base85 decoder
     """
     res = bytearray()
-    if len(b) % 5 == 1:
-        raise ValueError("Incorrect length of the last chunk")
 
     for i in range(0, len(b) - 4, 5):
         val = sum(DECODE_MAP[b[i + j]] * powers85[j] for j in range(5))
